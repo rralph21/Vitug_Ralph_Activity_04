@@ -15,7 +15,10 @@ class ContactList(QMainWindow):
         """Initializes a new instance of the ContactList class."""
 
         super().__init__()
-        self.__initialize_widgets()      
+        self.__initialize_widgets()
+
+        #connect __on_add_contact @Slot
+        self.add_button.clicked.connect(self.__on_add_contact)      
 
     def __initialize_widgets(self):
         """Initializes the widgets on this Window.
