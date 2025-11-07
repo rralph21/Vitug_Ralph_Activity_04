@@ -17,8 +17,11 @@ class ContactList(QMainWindow):
         super().__init__()
         self.__initialize_widgets()
 
-        #connect __on_add_contact @Slot
-        self.add_button.clicked.connect(self.__on_add_contact)      
+        #connect __on_add_contact @Slot()
+        self.add_button.clicked.connect(self.__on_add_contact)
+
+        #connect __on_remove_contact @Slot()
+        self.add_button.clicked.connect(self.___on_remove_contact)
 
     def __initialize_widgets(self):
         """Initializes the widgets on this Window.
@@ -55,11 +58,15 @@ class ContactList(QMainWindow):
         self.setCentralWidget(container)
 
 
-    @Slot
+    @Slot()
     def __on_add_contact(self) -> None:
         """
         on_add_contact (None): method will be a slot for the signal that occurs
         when the user clicks the Add Contact Button.
+
+        dunder: naming convention makes on_add_contact private.
+
+        status_label: String message notifying use to enter valid entries.
         """
 
         name = self.contact_name_input.text().strip()
@@ -83,3 +90,32 @@ class ContactList(QMainWindow):
                 "Plese enter a contact name and phone number")
         
 
+    @Slot()
+    def ___on_remove_contact(self) -> None:
+        """
+        on_remove_contact (None): method will be a slot for the signal that occurs
+        when the user clicks the Remove Contact Button.
+
+        dunder: naming convention makes on_remove_contact private.
+
+        status_label: String message notifying user to select a row to remove
+        """
+
+        row = self.contact_table.currentRow()
+
+        if row >= 0:
+
+            new_item = self.contact_table.item(row, 0)
+
+            reply = QMessageBox.question(self, "Remove Contact",
+                "Are you sure you want to remove selected contact?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No
+            )
+
+            if reply == QMessageBox.Yes:
+                self.contact_table.removeRow(row)
+                self.status_label.setText("Contact removed.")
+            
+        else:
+            self.status_label.setText("Please select a row to be removed.")
