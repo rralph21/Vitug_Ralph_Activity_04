@@ -21,7 +21,7 @@ class ContactList(QMainWindow):
         self.add_button.clicked.connect(self.__on_add_contact)
 
         #connect __on_remove_contact @Slot()
-        self.add_button.clicked.connect(self.___on_remove_contact)
+        self.remove_button.clicked.connect(self.___on_remove_contact)
 
     def __initialize_widgets(self):
         """Initializes the widgets on this Window.
@@ -104,8 +104,6 @@ class ContactList(QMainWindow):
         row = self.contact_table.currentRow()
 
         if row >= 0:
-
-            new_item = self.contact_table.item(row, 0)
 
             reply = QMessageBox.question(self, "Remove Contact",
                 "Are you sure you want to remove selected contact?",
